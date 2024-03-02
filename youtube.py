@@ -1,4 +1,4 @@
-
+    
 
 
 
@@ -514,23 +514,24 @@ with st.sidebar:
     
     
 channel_id = st.text_input("Enter the Channel id")
-channels = channel_id.split(',')
-channels = [ch.strip() for ch in channels if ch]    
 
 
 if st.button("Collect and Store data"):
-    for channel in channels:
-        ch_ids = []
-        db = client["Youtube_database"]
-        collection1 = db["channel_details1"]
-        for ch_data in collection1.find({},{"_id":0,"channel_information":1}):
-            ch_ids.append(ch_data["channel_information"]["Channel_Id"])
-        if channel in ch_ids:
-            st.success("Channel details of the given channel id: " + channel + " already exists")
-        else:
-            output = channel_details1(channel)
-            st.success(output)
+        
+    ch_ids = []
+    db = client["youtube_database"]
+    collection1 = db["channel_details1"]
+    for ch_data in collection1.find({}, {"_id": 0, "channel_information": 1}):
+        ch_ids.append(ch_data["channel_information"]["Channel_Id"]) 
             
+        if channel_id in ch_ids:
+             st.success("Channel details of the given channel id: " + channel_id + " already exists")
+        else:
+             output = channel_details1(channel_id)
+             st.success(output)
+
+
+
             
 if st.button("Migrate to SQL"):
     display = tables()
